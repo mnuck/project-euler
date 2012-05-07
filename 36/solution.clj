@@ -1,3 +1,5 @@
+(ns user)
+
 (defn num-to-digit-seq [n]
   (if (< n 10)
     (list n)
@@ -22,10 +24,10 @@
 
 
 (defn decimal-palindrome? [n]
-  (palindrome-seq? (num-to-digit-seq n)))
+  (palindrome-seq? (Integer/toString n 10)))
 
 (defn binary-palindrome? [n]
-  (palindrome-seq? (num-to-binary-seq n)))
+  (palindrome-seq? (Integer/toString n 2)))
 
 (defn double-palindrome? [n]
   (and (decimal-palindrome? n)
