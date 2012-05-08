@@ -1,20 +1,14 @@
 #!/usr/bin/env python
 
-previousNum = 0
-currentNum = 1
 def nextFib():
-  global previousNum
-  global currentNum
-  
-  # temp = previousNum
-  # previousNum = currentNum
-  currentNum += previousNum
-  previousNum = currentNum - previousNum
-  
-  return previousNum
-  
-seqNum = 1
-while( len(str(nextFib())) < 1000 ):
-  seqNum += 1
+  previous, current = 0, 1
+  while True:
+    yield previous
+    previous, current = current, current + previous
 
-print seqNum
+
+solution, _ = ((term,value) for (term,value) 
+               in enumerate(nextFib())
+               if len(str(value)) >= 1000).next()
+
+print solution
