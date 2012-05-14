@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+#
+# Project Euler 38
 
 def isPandigital(s):
     return sorted(list(s)) == ['1','2','3','4','5','6','7','8','9']
