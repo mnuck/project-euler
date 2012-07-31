@@ -11,10 +11,7 @@ def isPrime(n):
   return True
 
 def isTwiceSquare(n):
-  """Two is a non-odd prime, if this blows up, that's why"""
-  n /= 2.0
-  sqrt_n = int(sqrt(n))
-  return sqrt_n * sqrt_n == n
+  return not sqrt(n/2.0) % 1
 
 def solution():
   n = 3
