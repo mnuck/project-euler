@@ -15,7 +15,7 @@ def generate(i):
 
 largest = 123456789
 
-for i in xrange(1000000):
+for i in xrange(100000):
     x = generate(i)
     if isPandigital(x):
         if int(x) > largest:
