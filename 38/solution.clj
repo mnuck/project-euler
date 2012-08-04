@@ -18,4 +18,4 @@
          (filter pandigital-9?
                  (map generate (range n)))))
 
-(time (solution 100000))
+(time (solution  100000))
