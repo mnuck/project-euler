@@ -2,7 +2,7 @@
 #
 # Project Euler 89
 
-matchers = [('VV','X'), # compression
+matchers = [('VV','X'),    # compression
             ('LL','C'),
             ('DD','M'),
             ('IIII','IV'), # making fours
@@ -13,18 +13,14 @@ matchers = [('VV','X'), # compression
             ('DCD','CM')]
 
 def minimalize(s):
-    global matchers
-    result = s
     for matcher in matchers:
-        result = result.replace(*matcher)
-    return result
+        s = s.replace(*matcher)
+    return s
 
 def solution():
-    f = open("roman.txt")
-    raw = f.read()
-    f.close()
-    shrunk = minimalize(raw)
-    return len(raw) - len(shrunk)
+    with open("roman.txt") as f:
+        raw = f.read()
+    return len(raw) - len(minimalize(raw))
 
 if __name__ == "__main__":
     print solution()
