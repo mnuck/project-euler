@@ -3,23 +3,19 @@
 def pentagonal(n):
   return (3*n - 1) * n / 2
 
-
 def solution():
-  plist = list()
-  pset  = set()
+  pents = set()
   n = 0
   while True:
     n += 1
     d = pentagonal(n)
-    for a in plist:
-      print d, a
+    for a in pents:
       b = d - a
-      if b in pset:
+      if b in pents:
         c = a - b
-        if c in pset:
+        if c in pents:
           return c
-    plist.append(d)
-    pset.add(d)
+    pents.add(d)
 
 if __name__ == "__main__":
   print solution()
