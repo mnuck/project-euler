@@ -1,40 +1,62 @@
+#!/usr/bin/env python
 #
-# Project Euler 69
-# 
+# Project Euler 72
 
-def cached_primes():
-    with open("primes100000.txt", 'r') as f:
-        result = [int(x) for x in f.readlines()]
-    return result
+from bitarray import bitarray
+from math import sqrt
 
-primes = cached_primes()
+def generate_primes():
+    size = 1000000
+    stop = int(sqrt(size))
+    a = bitarray(size)
+    a.setall(True)
+    a[:2] = False
+    primes = list()
+    next = 2
+    try:
+        while True:
+            primes.append(int(next))
+            if next < stop:
+                a[next::next] = False
+            next = a.index(True, next+1)
+    except ValueError:
+        pass
+    return primes
 
-def prime_factors(n):
-    result = set()
-    while n > 1:
-        for prime in primes:
-            if n % prime == 0:
-                result.add(prime)
-                n = n / prime
-                break        
-    return result
+primes = set(generate_primes())
+factors = dict()
 
-factormap = { x: prime_factors(x) for x in xrange(2,1000001) }
+def factorize(n):
+    global primes
+    global factors
+    result = list()
+    original = n
+    if n in primes:
+        factors[n] = [n]
+        return factors[n]
+    for prime in primes:
+        while n % prime == 0:
+            result.append(prime)
+            n /= prime
+            if n in factors:
+                factors[original] = result + factors[n]
+                return factors[original]
 
-print "here!"
-
-def totient(n):
-    factors = factormap[n]
+def totient(d):
     result = 1
-    for i in xrange(2,n):
-        if not factors.intersection(factormap[i]):
-            result += 1
+    factors = factorize(d)
+    used = set()
+    for factor in factors:
+        if factor in used:
+            result *= factor
+        else:
+            result *= (factor - 1)
+            used.add(factor)
     return result
 
-maxratio = 0
-for i in xrange(2,1000001):
-    ratio = float(i)/totient(i)
-    if ratio > maxratio:
-        maxratio = ratio
-        print i, ratio
-        
+def solution():
+    return max( [x for x in xrange(2,1000001)],
+                key = lambda x: float(x)/totient(x))
+
+if __name__ == "__main__":
+    print solution()
