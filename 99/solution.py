@@ -4,6 +4,8 @@
 #
 # very slow
 
+from math import log
+
 def get_data():
     with open('base_exp.txt') as f:
         splitted = [x.split(',') for x in f.readlines()]
@@ -13,20 +15,18 @@ def get_data():
 
 def solution():
     data = get_data()
-    biggest = {'value': 1**1, 
+    biggest = {'value': 1, 
                'base':  1, 
                'exponent': 1, 
                'line': 0 }
     for (line, (base,exponent)) in data:
-        current = base ** exponent
+#        current = base ** exponent
+        current = exponent * log(base)
         if current > biggest['value']:
-            print "new winnar:", line, base, exponent
             biggest = {'value': current,
                        'base': base,
                        'exponent': exponent,
                        'line': line }
-        else:
-            print "loser!", line
     return biggest['line'] + 1
     
     
