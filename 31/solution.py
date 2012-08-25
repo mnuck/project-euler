@@ -29,7 +29,7 @@ while frontier:
         closed.add(child)
         total = sum(x*y for (x,y) in zip(child,coins))
         if total == goal:
-            print child
+            #print child
             valid.add(child)
         elif total < goal:
             frontier.append(child)
