@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# Project Euler 72
+# Project Euler 69
 
 from bitarray import bitarray
 from math import sqrt
