@@ -56,15 +56,20 @@ def categorize(n):
         tail.add(start)
 
 
+def chain(n):
+    result = list()
+    while n not in result:
+        result.append(n)
+        n = next(n)
+    return result
+
+
 def chain_length(n):
     if n in chains:
         return chains[n]
-    chain = list()
-    while n not in chain:
-        chain.append(n)
-        n = next(n)
-    for a in chain:
-        chains[a] = len(chain)
+    c = chain(n)
+    for a in c:
+        chains[a] = len(c)
     return chains[n]
 
 
@@ -78,7 +83,10 @@ def solution():
     for a in amicable:
         if chain_length(a) > longest:
             longest = chain_length(a)
+            member = a
             print a, chain_length(a)
+    longest = chain(member)
+    return min(longest)
 
 
 if __name__ == "__main__":
