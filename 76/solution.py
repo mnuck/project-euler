@@ -13,11 +13,11 @@ def p(n):
         result = 0
         k = 1
         while p(n - g(k)) != 0:
-            result += p(n - g(k)) * pow(-1, (k - 1))
+            result += p(n - g(k)) * int(pow(-1, (k - 1)))
             k += 1
         k = -1
         while p(n - g(k)) != 0:
-            result += p(n - g(k)) * pow(-1, (k - 1))
+            result += p(n - g(k)) * int(pow(-1, (k - 1)))
             k -= 1
         p_cache[n] = result
     return p_cache[n]
@@ -28,7 +28,7 @@ def g(k):
 
 
 def solution():
-    return int(p(100) - 1)
+    return p(100) - 1
 
 
 if __name__ == "__main__":

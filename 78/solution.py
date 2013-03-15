@@ -31,9 +31,6 @@ def solution():
     n = 1
     while p(n) % 1000000 != 0:
         n += 1
-        if n % 1000 == 0:
-            print n, p(n)
-    print p(n)
     return n
 
 
