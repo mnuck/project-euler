@@ -10,7 +10,6 @@ denom = float(sides * sides)
 def modal_string(weights):
     result = list(enumerate(weights))
     result.sort(key=lambda (x, y): y, reverse=True)
-    print result
     result = [a for (a, b) in result]
     return "%.2d%.2d%.2d" % tuple(result[:3])
 
@@ -34,60 +33,19 @@ def next_weights(nodes, edges):
     # 3 doubles in a row
     result[10] += float(1) / (sides * sides * sides)
 
-    # go to jail (tweeeeeet)
-    result[10] += result[30]
-    result[30] = 0.0
+    def alter(source, targets):
+        unit = result[source] * (1.0 / 16)
+        result[source] -= unit * len(targets)
+        for i in targets:
+            result[i] += unit
 
-    # CC1
-    result[0] += result[2] * (1.0 / 16)
-    result[10] += result[2] * (1.0 / 16)
-    result[2] *= (1 - (2.0 / 16))
-
-    # CC2
-    result[0] += result[17] * (1.0 / 16)
-    result[10] += result[17] * (1.0 / 16)
-    result[17] *= (1 - (2.0 / 16))
-
-    # CC3
-    result[0] += result[33] * (1.0 / 16)
-    result[10] += result[33] * (1.0 / 16)
-    result[33] *= (1 - (2.0 / 16))
-
-    # CH1
-    result[0] += result[7] * (1.0 / 16)
-    result[10] += result[7] * (1.0 / 16)
-    result[11] += result[7] * (1.0 / 16)
-    result[24] += result[7] * (1.0 / 16)
-    result[39] += result[7] * (1.0 / 16)
-    result[5] += result[7] * (1.0 / 16)
-    result[15] += result[7] * (2.0 / 16)
-    result[12] += result[7] * (1.0 / 16)
-    result[4] += result[7] * (1.0 / 16)
-    result[7] *= (1 - (10.0 / 16))
-
-    # CH2
-    result[0] += result[22] * (1.0 / 16)
-    result[10] += result[22] * (1.0 / 16)
-    result[11] += result[22] * (1.0 / 16)
-    result[24] += result[22] * (1.0 / 16)
-    result[39] += result[22] * (1.0 / 16)
-    result[5] += result[22] * (1.0 / 16)
-    result[25] += result[22] * (2.0 / 16)
-    result[28] += result[22] * (1.0 / 16)
-    result[19] += result[22] * (1.0 / 16)
-    result[22] *= (1 - (10.0 / 16))
-
-    # CH3
-    result[0] += result[36] * (1.0 / 16)
-    result[10] += result[36] * (1.0 / 16)
-    result[11] += result[36] * (1.0 / 16)
-    result[24] += result[36] * (1.0 / 16)
-    result[39] += result[36] * (1.0 / 16)
-    result[5] += result[36] * (1.0 / 16)
-    result[5] += result[36] * (2.0 / 16)
-    result[12] += result[36] * (1.0 / 16)
-    result[33] += result[36] * (1.0 / 16)
-    result[36] *= (1 - (10.0 / 16))
+    alter(30, [10] * 16)  # go to jail (tweeeeeet)
+    alter(2, [0, 10])  # CC1
+    alter(17, [0, 10])  # CC2
+    alter(33, [0, 10])  # CC3
+    alter(7, [0, 10, 11, 24, 39, 5, 15, 15, 12, 4])  # CH1
+    alter(22, [0, 10, 11, 24, 39, 5, 25, 25, 28, 19])  # CH2
+    alter(36, [0, 10, 11, 24, 39, 5, 5, 5, 12, 33])  # CH3
 
     return result
 
