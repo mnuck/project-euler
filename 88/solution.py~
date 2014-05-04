@@ -1,0 +1,84 @@
+#!/usr/bin/env python
+# hello beloved.  I'm typing away.
+#
+# Project Euler 88
+
+from bitarray import bitarray
+from math import sqrt
+
+def generate_primes():
+    size = 1000000
+    stop = int(sqrt(size))
+    a = bitarray(size)
+    a.setall(True)
+    a[:2] = False
+    primes = list()
+    next = 2
+    try:
+        while True:
+            primes.append(int(next))
+            if next < stop:
+                a[next::next] = False
+            next = a.index(True, next+1)
+    except ValueError:
+        pass
+    return primes
+
+
+primes = set(generate_primes())
+factors = dict()
+
+def factorize(n):
+    global primes
+    global factors
+    if n in factors:
+        return factors[n]
+    result = list()
+    original = n
+    if n in primes:
+        factors[n] = [n]
+        return factors[n]
+    for prime in primes:
+        while n % prime == 0:
+            result.append(prime)
+            n /= prime
+            if n in factors:
+                factors[original] = result + factors[n]
+                return factors[original]
+    return [1]
+
+
+def product_sum_set_size(factors):
+    partial_sum = sum(factors)
+    N = reduce(lambda x,y: x*y, factors)
+    ones = N - partial_sum
+    return len(factors) + ones
+
+
+def generate_factors_from_prime_factor(prime_factors):
+    return {{2, 2, 3, 3}, {2, 2, 9}, {4, 3, 3}, {4, 9}}
+
+def product_sum_set_sizes(N):
+    prime_factors = factorize(N)
+    factor_sets = generate_factors_from_prime_factors(prime_factors)
+    return [product_sum_set_size(x) for x in factor_sets]
+
+
+def solution():
+    minimal_product_sums = dict()  # k -> N 
+    for N in xrange(2, 24000):
+        for k in product_sum_set_sizes(N):
+            if k not in minimal_product_sums:
+                minimal_product_sums[k] = N
+
+    result = 0
+    for i in xrange(2, 12000):
+        result += minimal_product_sums[i]
+    return result
+
+
+#if __name__ == "__main__":
+#    print solution()
+    
+
+
