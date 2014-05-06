@@ -1,0 +1,12 @@
+#/usr/bin/env python
+#
+# Project Euler 206
+
+
+def solution():
+    return sum(1 for x in read_triangles("triangles.txt") 
+               if x.contains_origin())
+
+
+if __name__ == "__main__":
+    print solution()
