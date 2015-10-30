@@ -22,26 +22,22 @@ Find \sum{S(p)} for 5 <= p < 10**8.
 import bitarray
 import itertools
 
-def primes(minP, maxP):
-    ba = bitarray.bitarray(maxP)
-    ba.setall(False)
-    for i in itertools.count(2):
-        if i >= minP:
-            break
-        if not ba[i]:
-            for j in  itertools.count(i*i, i):
-                if j >= maxP:
-                    break
-                ba[j] = True
-    for i in itertools.count(minP):
-        if i >= maxP:
-            break
-        if not ba[i]:
-            yield i
-            for j in itertools.count(i*i, i):
-                if j >= maxP:
-                    break
-                ba[j] = True
+from math import sqrt
+
+def primes(maxP):
+    stop = int(sqrt(maxP))
+    a = bitarray.bitarray(maxP)
+    a.setall(True)
+    a[:2] = False
+    next = 2
+    try:
+        while True:
+            yield next
+            if next < stop:
+                a[next::next] = False
+            next = a.index(True, next+1)
+    except ValueError:
+        pass
 
 def bigS(p):
     h = p / 24
@@ -56,7 +52,7 @@ def bigS(p):
     return (a + b + c) % p
 
 def solution():
-    return sum(bigS(p) for p in primes(5, pow(10, 8)))
+    return sum(bigS(p) for p in primes(pow(10, 8)) if p >= 5)
 
 if __name__ == "__main__":
     print solution()
