@@ -32,7 +32,7 @@ proc isPrime(n: int): bool =
     d = d div 2
     s = s + 1
   # magic numbers from http://miller-rabin.appspot.com/
-  for a in [2, 325, 9375, 28178, 450775, 9780504, 1795265022]:
+  for a in [2, 3, 325, 9375, 28178, 450775, 9780504, 1795265022]:
     if a > (n - 2):
       return true
     if tryComposite(a, d, n, s):
@@ -40,8 +40,8 @@ proc isPrime(n: int): bool =
   return true
 
 proc solution(): int =
-  var n = 2
-  var i = 1
+  var n = 1
+  var i = 0
   while i < 10_001:
     n = n + 1
     if isPrime(n):
