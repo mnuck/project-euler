@@ -17,9 +17,11 @@ def chainLen(n):
   cheat[startN] = len
   return len
   
-maxLen = 1  
+maxLen = 1
+result = 1
 for n in xrange(1,1000000):
   l = chainLen(n)
   if(l > maxLen):
     maxLen = l
-    print n, maxLen
+    result = n
+print result
