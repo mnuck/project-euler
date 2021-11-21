@@ -1,2 +1,4 @@
 .svn/*
 */nimcache/
+.idea/*
+*/__pycache__/
